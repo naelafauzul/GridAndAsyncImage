@@ -11,7 +11,7 @@ import SwiftUI
 struct GridAndAsyncImageApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            GridImage()
         }
     }
 }
