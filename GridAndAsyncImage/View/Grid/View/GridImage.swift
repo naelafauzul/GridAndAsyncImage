@@ -72,7 +72,7 @@ struct GridImage: View {
                                     VStack(alignment: .leading) {
                                         Image(systemName: "photo.fill")
                                             .frame(width: 100, height: 100)
-                                            .background(.purple)
+                                            .background(.blue)
                                             .clipShape(RoundedRectangle(cornerRadius: 10))
                                         
                                         Text(photo.name)
