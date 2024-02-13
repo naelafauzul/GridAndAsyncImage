@@ -14,6 +14,17 @@ struct GridImage: View {
     @State private var searchText = ""
     @State private var searchIsActive = false
     
+    var filteredPhotos: [Photo] {
+        if searchText.isEmpty {
+            return photoVM.photos
+        } else {
+            return photoVM.photos.filter { photo in
+                photo.name.contains(searchText) ||
+                photo.anime.contains(searchText)
+            }
+        }
+    }
+    
     let columns: [GridItem] = [
         GridItem(.adaptive(minimum: 100), spacing: 20)
     ]
@@ -58,10 +69,25 @@ struct GridImage: View {
                                     }
                                     
                                 case .failure(let error):
-                                    VStack {
+                                    VStack(alignment: .leading) {
                                         Image(systemName: "photo.fill")
-                                        Text(error.localizedDescription)
+                                            .frame(width: 100, height: 100)
+                                            .background(.purple)
+                                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        
+                                        Text(photo.name)
+                                            .font(.subheadline)
+                                            .fontWeight(.bold)
+                                            .multilineTextAlignment(.center)
+                                            .lineLimit(2)
+                                            .foregroundColor(.black)
+                                        
+                                        Text(photo.anime)
+                                            .font(.caption)
+                                            .lineLimit(2)
                                     }
+                                    
+                                    
                                 @unknown default:
                                     fatalError()
                                 }
@@ -75,10 +101,8 @@ struct GridImage: View {
                             Group {
                                 let defaultText = "You are about to share this items"
                                 
-                                if let imageToShare = UIImage(named: photo.image) {
+                                if let imageToShare = photoVM.imageToShare {
                                     ActivityView(activityItems: [defaultText, imageToShare])
-//                                    photoVM.imageToShare {
-//                                    ActivityView(activityItems: [defaultText, imageToShare])
                                 } else {
                                     ActivityView(activityItems: [defaultText])
                                 }
@@ -121,16 +145,7 @@ struct GridImage: View {
             await photoVM.fetchPhotos()
         }
     }
-    var filteredPhotos: [Photo] {
-        if searchText.isEmpty {
-            return photoVM.photos
-        } else {
-            return photoVM.photos.filter { photo in
-                photo.name.contains(searchText) ||
-                photo.anime.contains(searchText)
-            }
-        }
-    }
+    
 }
 
 #Preview {
