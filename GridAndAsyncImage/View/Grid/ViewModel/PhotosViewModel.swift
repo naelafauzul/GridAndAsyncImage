@@ -50,10 +50,16 @@ class PhotosViewModel: ObservableObject {
         }
     }
     
+    
     // Prepare untuk muncul di sheet
     func prepareImageAndShowSheet(from urlString: String) async {
         imageToShare = await downloadImage(from: urlString)
         showOptions = true
         
     }
+    
+    func deletePhoto(at index: Int) {
+            photos.remove(at: index)
+        }
+    
 }

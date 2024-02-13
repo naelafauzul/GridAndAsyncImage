@@ -131,7 +131,7 @@ struct GridImage: View {
                         .confirmationDialog("Are you sure?", isPresented: $confirmationShow, titleVisibility: .visible
                         ) {
                             Button("Yes", role: .destructive, action: {
-                                self.photoVM.photos.remove(at: indexPhoto)
+                                photoVM.deletePhoto(at: indexPhoto)
                             })
                             Button("Cancel", role: .cancel, action: {})
                         }
